@@ -1,6 +1,5 @@
-import { Sequelize } from "sequelize";
-
-const DatabaseConnection = new Sequelize("uptask", "root", "", {
+const Sequelize = require("sequelize")
+const db = new Sequelize("uptask", "root", "", {
   host: "localhost",
   dialect: "mysql",
   port: "3306",
@@ -15,4 +14,4 @@ const DatabaseConnection = new Sequelize("uptask", "root", "", {
   },
 });
 
-export default DatabaseConnection;
+module.exports = db;

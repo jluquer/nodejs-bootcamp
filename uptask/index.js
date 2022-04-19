@@ -1,16 +1,13 @@
-import express from "express";
-import routes from "./routes/index.js";
-import * as path from "path";
-import bodyParser from "body-parser";
-import { fileURLToPath } from "url";
-import db from "./config/db.js";
-
+const express = require("express");
+const routes = require("./routes");
+const path = require("path");
+const bodyParser = require("body-parser");
+const db = require("./config/db");
 const app = express();
 const port = process.env.PORT || 3000;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // DB
+require("./models/Proyecto");
 db.sync()
   .then(() => {
     console.log("Conectado al servidor");
@@ -25,10 +22,11 @@ app.set("views", path.join(__dirname, "./views"));
 app.use(express.static("public"));
 
 // json
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-app.use("/", routes);
+app.use("/", routes());
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

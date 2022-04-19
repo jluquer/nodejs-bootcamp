@@ -1,17 +1,14 @@
-import * as Sequelize from "sequelize";
-import db from "../config/db";
+const Sequelize = require("sequelize");
+const db = require("../config/db");
 
-export default class Proyecto  extends Model {}
-
-User.init({
-    id: {
+const Proyecto = db.define("proyecto", {
+  id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  nombre: Sequelize.STRING,
-  url: Sequelize.STRING,
-}, {
-  db, // We need to pass the connection instance
-  modelName: 'User' // We need to choose the model name
+  nombre: Sequelize.STRING(100),
+  url: Sequelize.STRING(100),
 });
+
+module.exports = Proyecto;

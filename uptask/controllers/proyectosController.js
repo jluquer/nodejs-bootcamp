@@ -1,16 +1,16 @@
-export function proyectosHome(req, res) {
+exports.proyectosHome = (req, res) => {
   res.render("index", {
     nombrePagina: "Proyectos",
   });
-}
+};
 
-export function formularioProyecto(req, res) {
+exports.formularioProyecto = (req, res) => {
   res.render("nuevoProyecto", {
     nombrePagina: "Nuevo Proyecto",
   });
-}
+};
 
-export function nuevoProyecto(req, res) {
+exports.nuevoProyecto = (req, res) => {
   try {
     const { nombre } = req.body;
     const errores = [];
@@ -18,11 +18,10 @@ export function nuevoProyecto(req, res) {
     if (errores.length > 0) {
       return res.render("nuevoProyecto", {
         nombrePagina: "Nuevo Proyecto",
-        errores
+        errores,
       });
     }
-    
   } catch (err) {
     console.log(err);
   }
-}
+};

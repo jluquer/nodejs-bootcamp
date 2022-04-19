@@ -1,13 +1,11 @@
-import { Router } from "express";
-const routes = Router();
-import {
-  proyectosHome,
-  formularioProyecto,
-  nuevoProyecto,
-} from "../controllers/proyectosController.js";
+const express = require("express")
+const router = express.Router();
+const proyectosController = require('../controllers/proyectosController');
 
-routes.get("/", proyectosHome);
-routes.get("/nuevo-proyecto", formularioProyecto);
-routes.post("/nuevo-proyecto", nuevoProyecto);
+module.exports = function() {
+  router.get("/", proyectosController.proyectosHome);
+  router.get("/nuevo-proyecto", proyectosController.formularioProyecto);
+  router.post("/nuevo-proyecto", proyectosController.nuevoProyecto);
 
-export default routes;
+  return router
+};
