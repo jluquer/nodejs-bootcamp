@@ -1,9 +1,11 @@
 const Proyecto = require("../models/Proyecto");
 const slug = require("slug");
 
-exports.proyectosHome = (req, res) => {
+exports.proyectosHome = async (req, res) => {
+  const proyectos = await Proyecto.findAll();
   res.render("index", {
     nombrePagina: "Proyectos",
+    proyectos
   });
 };
 
