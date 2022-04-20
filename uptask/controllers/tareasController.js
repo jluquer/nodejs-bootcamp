@@ -19,5 +19,13 @@ exports.cambiarEstadoTarea = async (req, res, next) => {
   const result = await tarea.save();
 
   if (!result) return next();
-  res.status(200).json({ message: "Actualizado"});
+  res.status(200).json({ message: "Actualizado" });
+};
+
+exports.eliminarTarea = async (req, res, next) => {
+  const tarea = await Tarea.findOne({ where: { id: req.params.id } });
+  if (!tarea) return res.status(404);
+  const result = tarea.destroy({ where: { id: tarea.id } });
+  if (!result) return next();
+  res.status(200).json({ message: "Tarea eliminada" });
 };
