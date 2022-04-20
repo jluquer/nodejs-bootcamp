@@ -1,5 +1,4 @@
 const Proyecto = require("../models/Proyecto");
-const slug = require("slug");
 
 exports.proyectosHome = async (req, res) => {
   const proyectos = await Proyecto.findAll();
@@ -81,4 +80,11 @@ exports.actualizarProyecto = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+exports.eliminarProyecto = async (req, res, next) => {
+  const { url } = req.params;
+  const result = await Proyecto.destroy({ where: { url: url } });
+  if (!result) return next();
+  res.status(200).json({ message: "Proyecto eliminado correctamente" });
 };

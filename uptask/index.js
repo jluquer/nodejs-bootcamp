@@ -9,6 +9,7 @@ const helpers = require("./helpers");
 
 // DB
 require("./models/Proyecto");
+require("./models/Tarea");
 db.sync()
   .then(() => {
     console.log("Conectado al servidor");

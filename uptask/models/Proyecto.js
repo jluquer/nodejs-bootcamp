@@ -7,7 +7,7 @@ const Proyecto = db.define(
   "proyecto",
   {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.INTEGER(11),
       primaryKey: true,
       autoIncrement: true,
     },
