@@ -61,3 +61,24 @@ exports.formularioEditar = async (req, res, next) => {
     proyecto,
   });
 };
+
+exports.actualizarProyecto = async (req, res) => {
+  try {
+    const { nombre } = req.body;
+    const proyectos = await Proyecto.findAll();
+    const errores = [];
+    if (!nombre) errores.push({ texto: "Agrega un nombre al proyecto" });
+    if (errores.length > 0) {
+      res.render("nuevoProyecto", {
+        nombrePagina: "Nuevo Proyecto",
+        errores,
+        proyectos,
+      });
+      return;
+    }
+    await Proyecto.update({ nombre }, { where: { id: req.params.id } });
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
+};
