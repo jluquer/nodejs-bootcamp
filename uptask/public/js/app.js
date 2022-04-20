@@ -1,2 +1,7 @@
-import proyecto from "./modules/proyecto";
-import tareas from "./modules/tareas";
+import { actualizarAvance } from "./helpers/avance";
+import proyecto from "./components/proyecto";
+import tareas from "./components/tareas";
+
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarAvance();
+});

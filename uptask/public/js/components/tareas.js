@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { actualizarAvance } from "../helpers/avance";
 
 const tareas = document.querySelector(".listado-pendientes");
 
@@ -12,7 +13,10 @@ tareas?.addEventListener("click", (e) => {
     const idTarea = elClicked.parentElement?.parentElement?.dataset?.tarea;
     const url = `${location.origin}/tareas/${idTarea}`;
     axios.patch(url, { idTarea }).then((res) => {
-      if (res.status === 200) classList.toggle("completo");
+      if (res.status === 200) {
+        classList.toggle("completo");
+        actualizarAvance();
+      }
     });
   } else if (classList.contains("fa-trash")) {
     const elTarea = elClicked.parentElement?.parentElement;
@@ -25,6 +29,7 @@ tareas?.addEventListener("click", (e) => {
           console.log(res);
           if (res.status === 200) {
             elTarea.remove();
+            actualizarAvance();
             deleteSuccessAlert();
           } else {
             deleteFailAlert();
