@@ -17,12 +17,12 @@ html(lang="en")
           a(href="/nuevo-proyecto" class="boton") Nuevo Proyecto
             span +
         .panel.lista-proyectos 
-          h2 Proyectos
+          h2 Proyectos 
           ul#proyectos.proyectos
             if (proyectos.length)
               each proyecto in proyectos 
                 li 
-                  a(href="#")=proyecto.nombre
+                  a(href=`/proyectos/${proyecto.url}`)=proyecto.nombre
 
       block contenido 
 
