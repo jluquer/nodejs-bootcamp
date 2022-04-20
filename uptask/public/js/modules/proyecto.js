@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { redirect } from "../helpers/globalHelper";
 
 const btnEliminar = document.querySelector("#eliminar-proyecto");
 
@@ -40,10 +41,3 @@ function deleteFailAlert() {
   return Swal.fire("Hubo un error", "No se pudo eliminar el proyecto", "error");
 }
 
-function redirect(config = { url: "/", time: 0 }) {
-  const { url, time } = config ?? {};
-  if (url == null || time == null) return;
-  setTimeout(() => {
-    window.location.href = url;
-  }, time);
-}

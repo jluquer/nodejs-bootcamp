@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const tareas = document.querySelector(".listado-pendientes");
 
 tareas?.addEventListener("click", (e) => {
@@ -7,7 +9,13 @@ tareas?.addEventListener("click", (e) => {
 
   if (classList.contains("fa-check-circle")) {
     const idTarea = elClicked.parentElement?.parentElement?.dataset?.tarea;
-    console.log(idTarea);
+    const url = `${location.origin}/tareas/${idTarea}`;
+    axios.patch(url, { idTarea }).then((res) => {
+      if (res.status === 200) {
+        classList.toggle('completo')
+      }
+      console.log(res, "res");
+    });
   }
 });
 
