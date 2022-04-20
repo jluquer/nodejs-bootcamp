@@ -13,6 +13,7 @@ module.exports = function () {
   );
 
   router.get('/proyectos/:url', proyectosController.proyectoPorUrl)
+  router.get('/proyectos/editar/:id', proyectosController.formularioEditar)
 
   return router;
 };
