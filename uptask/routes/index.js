@@ -3,6 +3,7 @@ const { body } = require("express-validator");
 const router = express.Router();
 const proyectosController = require("../controllers/proyectosController");
 const tareasController = require("../controllers/tareasController");
+const usuariosController = require("../controllers/usuariosController");
 
 module.exports = function () {
   // Proyectos
@@ -25,7 +26,12 @@ module.exports = function () {
 
   // Tareas
   router.post("/proyectos/:url", tareasController.agregarTarea);
-  router.patch('/tareas/:id', tareasController.cambiarEstadoTarea)
-  router.delete('/tareas/:id', tareasController.eliminarTarea)
+  router.patch("/tareas/:id", tareasController.cambiarEstadoTarea);
+  router.delete("/tareas/:id", tareasController.eliminarTarea);
+
+  // Usuarios
+  router.get("/crear-cuenta", usuariosController.formCrearCuenta);
+  router.post("/crear-cuenta", usuariosController.crearCuenta);
+
   return router;
 };
