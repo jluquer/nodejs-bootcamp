@@ -5,14 +5,21 @@ exports.formCrearCuenta = (req, res, next) => {
 };
 
 exports.crearCuenta = async (req, res, next) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
     await Usuario.create({ email, password });
     res.redirect("/iniciar-sesion");
   } catch (error) {
+    req.flash(
+      "error",
+      error.errors.map((err) => err.message)
+    );
     res.render("crearCuenta", {
       nombrePagina: "Crear cuenta en Uptask",
-      errores: error.errors.map((err) => err.message),
+      mensajes: req.flash(),
+      categoria: "error",
+      email,
+      password,
     });
   }
 };

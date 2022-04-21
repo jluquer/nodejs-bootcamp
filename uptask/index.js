@@ -3,6 +3,8 @@ const routes = require("./routes");
 const path = require("path");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const db = require("./config/db");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -30,9 +32,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(flash());
 
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "supersecreto",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
 // Var dump
-app.use((_req, res, next) => {
+app.use((req, res, next) => {
   res.locals.vardump = helpers.vardump;
+  res.locals.mensajes = req.flash();
   next();
 });
 
