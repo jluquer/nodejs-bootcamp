@@ -38,5 +38,8 @@ const Usuario = db.define(
 );
 
 Usuario.hasMany(Proyecto);
+Usuario.prototype.verificarPassword = (password) => {
+  return bcrypt.compareSync(password, this.password);
+}
 
 module.exports = Usuario;

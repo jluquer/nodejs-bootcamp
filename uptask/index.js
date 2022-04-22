@@ -9,6 +9,7 @@ const db = require("./config/db");
 const app = express();
 const port = process.env.PORT || 3000;
 const helpers = require("./helpers");
+const passport = require("./config/passport");
 
 // DB
 require("./models/Proyecto");
@@ -40,6 +41,9 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Var dump
 app.use((req, res, next) => {
