@@ -4,35 +4,60 @@ const router = express.Router();
 const proyectosController = require("../controllers/proyectosController");
 const tareasController = require("../controllers/tareasController");
 const usuariosController = require("../controllers/usuariosController");
+const authController = require("../controllers/authController");
 
 module.exports = function () {
   // Proyectos
-  router.get("/", proyectosController.proyectosHome);
-  router.get("/nuevo-proyecto", proyectosController.formularioProyecto);
+  router.get("/", authController.usuarioAutenticado, proyectosController.proyectosHome);
+  router.get(
+    "/nuevo-proyecto",
+    authController.usuarioAutenticado,
+    proyectosController.formularioProyecto
+  );
   router.post(
     "/nuevo-proyecto",
+    authController.usuarioAutenticado,
     body("nombre").not().isEmpty().trim().escape(),
     proyectosController.nuevoProyecto
   );
 
-  router.get("/proyectos/:url", proyectosController.proyectoPorUrl);
-  router.get("/proyectos/editar/:id", proyectosController.formularioEditar);
-  router.delete("/proyectos/:url", proyectosController.eliminarProyecto);
+  router.get(
+    "/proyectos/:url",
+    authController.usuarioAutenticado,
+    proyectosController.proyectoPorUrl
+  );
+  router.get(
+    "/proyectos/editar/:id",
+    authController.usuarioAutenticado,
+    proyectosController.formularioEditar
+  );
+  router.delete(
+    "/proyectos/:url",
+    authController.usuarioAutenticado,
+    proyectosController.eliminarProyecto
+  );
   router.post(
     "/nuevo-proyecto/:id",
+    authController.usuarioAutenticado,
     body("nombre").not().isEmpty().trim().escape(),
     proyectosController.actualizarProyecto
   );
 
   // Tareas
-  router.post("/proyectos/:url", tareasController.agregarTarea);
-  router.patch("/tareas/:id", tareasController.cambiarEstadoTarea);
-  router.delete("/tareas/:id", tareasController.eliminarTarea);
+  router.post("/proyectos/:url", authController.usuarioAutenticado, tareasController.agregarTarea);
+  router.patch(
+    "/tareas/:id",
+    authController.usuarioAutenticado,
+    tareasController.cambiarEstadoTarea
+  );
+  router.delete("/tareas/:id", authController.usuarioAutenticado, tareasController.eliminarTarea);
 
   // Usuarios
   router.get("/crear-cuenta", usuariosController.formCrearCuenta);
   router.get("/iniciar-sesion", usuariosController.formIniciarSesion);
   router.post("/crear-cuenta", usuariosController.crearCuenta);
+  router.post("/iniciar-sesion", authController.autenticarUsuario);
+  router.get("/cerrar-sesion", authController.usuarioAutenticado, authController.cerrarSesion);
 
   return router;
 };

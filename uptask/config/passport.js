@@ -10,7 +10,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const usuario = Usuario.find({ where: { email } });
+        const usuario = await Usuario.findOne({ where: { email: email } });
         if (!usuario.verificarPassword(password))
           return done(null, false, { message: "Password incorrecto" });
         return done(null, usuario);
