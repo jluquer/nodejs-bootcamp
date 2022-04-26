@@ -2,7 +2,8 @@ const Proyecto = require("../models/Proyecto");
 const Tarea = require("../models/Tarea");
 
 exports.proyectosHome = async (req, res) => {
-  const proyectos = await Proyecto.findAll();
+  const usuarioId = res.locals.usuario.id;
+  const proyectos = await Proyecto.findAll({ where: { usuarioId } });
   res.render("index", {
     nombrePagina: "Proyectos",
     proyectos,
@@ -10,7 +11,8 @@ exports.proyectosHome = async (req, res) => {
 };
 
 exports.formularioProyecto = async (req, res) => {
-  const proyectos = await Proyecto.findAll();
+  const usuarioId = res.locals.usuario.id;
+  const proyectos = await Proyecto.findAll({ where: { usuarioId } });
   res.render("nuevoProyecto", {
     nombrePagina: "Nuevo Proyecto",
     proyectos,
@@ -20,7 +22,8 @@ exports.formularioProyecto = async (req, res) => {
 exports.nuevoProyecto = async (req, res) => {
   try {
     const { nombre } = req.body;
-    const proyectos = await Proyecto.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectos = await Proyecto.findAll({ where: { usuarioId } });
     const errores = [];
     if (!nombre) errores.push({ texto: "Agrega un nombre al proyecto" });
     if (errores.length > 0) {
@@ -39,7 +42,8 @@ exports.nuevoProyecto = async (req, res) => {
 };
 
 exports.proyectoPorUrl = async (req, res, next) => {
-  const proyectos$ = Proyecto.findAll();
+  const usuarioId = res.locals.usuario.id;
+  const proyectos$ = await Proyecto.findAll({ where: { usuarioId } });
   const proyecto$ = Proyecto.findOne({ where: { url: req.params.url } });
   const [proyectos, proyecto] = await Promise.all([proyectos$, proyecto$]);
 
@@ -59,7 +63,8 @@ exports.proyectoPorUrl = async (req, res, next) => {
 };
 
 exports.formularioEditar = async (req, res, next) => {
-  const proyectos$ = Proyecto.findAll();
+  const usuarioId = res.locals.usuario.id;
+  const proyectos$ = await Proyecto.findAll({ where: { usuarioId } });
   const proyecto$ = Proyecto.findOne({ where: { id: req.params.id } });
   const [proyectos, proyecto] = await Promise.all([proyectos$, proyecto$]);
   if (!proyecto || !proyectos) return next();
@@ -73,7 +78,8 @@ exports.formularioEditar = async (req, res, next) => {
 exports.actualizarProyecto = async (req, res) => {
   try {
     const { nombre } = req.body;
-    const proyectos = await Proyecto.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectos = await Proyecto.findAll({ where: { usuarioId } });
     const errores = [];
     if (!nombre) errores.push({ texto: "Agrega un nombre al proyecto" });
     if (errores.length > 0) {
