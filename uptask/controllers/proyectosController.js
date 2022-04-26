@@ -31,7 +31,7 @@ exports.nuevoProyecto = async (req, res) => {
       });
       return;
     }
-    await Proyecto.create({ nombre });
+    await Proyecto.create({ nombre, usuarioId: res.locals.usuario.id });
     res.redirect("/");
   } catch (err) {
     console.log(err);
