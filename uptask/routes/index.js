@@ -58,6 +58,10 @@ module.exports = function () {
   router.post("/crear-cuenta", usuariosController.crearCuenta);
   router.post("/iniciar-sesion", authController.autenticarUsuario);
   router.get("/cerrar-sesion", authController.usuarioAutenticado, authController.cerrarSesion);
+  router.get("/reestablecer", usuariosController.formResetPassword);
+  router.post("/reestablecer", authController.enviarToken);
+  router.get("/reestablecer/:token", authController.validarToken);
+  router.post("reestablecer/:token", authController.actualizarPassword);
 
   return router;
 };

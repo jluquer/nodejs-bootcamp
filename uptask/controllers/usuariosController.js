@@ -27,3 +27,9 @@ exports.crearCuenta = async (req, res, next) => {
 exports.formIniciarSesion = (req, res) => {
   res.render("iniciarSesion", { nombrePagina: "Iniciar sesión en Uptask" });
 };
+
+exports.formResetPassword = (req, res) => {
+  res.render("reestablecer", {
+    nombrePagina: "Reestablecer tu contraseña",
+  });
+};
